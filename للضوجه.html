@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باتشينو (أبو علي) - تحميل فيديوهات تيك توك وانستغرام بدون علامة مائية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* تأثير خلفية عصري */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,107,107,0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .card {
+            background: rgba(18, 18, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            width: 100%;
+            max-width: 580px;
+            padding: 35px 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff6b6b20, #c084fc20);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* الهاشتاق الرئيسي */
+        .hash-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .hash-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #c084fc);
+            padding: 8px 28px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hash-tag span {
+            font-size: 28px;
+            margin-left: 5px;
+        }
+
+        /* صورة الجالس (avatar) */
+        .avatar-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar-circle {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #ff6b6b, #c084fc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .avatar-circle span {
+            font-size: 52px;
+        }
+
+        /* اسم الموقع */
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, #ff6b6b, #c084fc, #ff6b6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+        }
+
+        /* أزرار المنصة */
+        .platform-select {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .platform-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #2a2a3a;
+            color: #ccc;
+            font-size: 15px;
+        }
+
+        .platform-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #c084fc);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,107,107,0.4);
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            border: 2px solid #2a2a3a;
+            border-radius: 50px;
+            outline: none;
+            transition: 0.2s;
+            margin-bottom: 15px;
+            background: #1e1e2a;
+            color: white;
+        }
+
+        .url-input:focus {
+            border-color: #ff6b6b;
+        }
+
+        .url-input::placeholder {
+            color: #666;
+        }
+
+        .download-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #c084fc);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+
+        .download-btn:active {
+            transform: scale(0.97);
+        }
+
+        .loader {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 15px auto;
+            border: 4px solid #2a2a3a;
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-box {
+            display: none;
+            background: #1e1e2a;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .video-preview {
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 15px;
+        }
+
+        .action-link {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+
+        .error-msg {
+            background: rgba(255,107,107,0.2);
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 50px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+            font-size: 14px;
+            border: 1px solid rgba(255,107,107,0.3);
+        }
+
+        /* روابط التواصل */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0 10px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2a2a3a;
+            padding: 8px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #ddd;
+            font-weight: bold;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .social-icon.telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .social-icon.telegram:hover {
+            background: #006699;
+            transform: scale(1.05);
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(135deg, #f77737, #e1306c, #405de6);
+            color: white;
+        }
+
+        .social-icon.instagram:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .social-icon i {
+            font-size: 18px;
+        }
+
+        .username {
+            font-family: monospace;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .hash-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hash-footer .hash {
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .note {
+            font-size: 11px;
+            text-align: center;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .watermark {
+            font-size: 10px;
+            text-align: center;
+            color: #444;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- صورة الجالس -->
+    <div class="avatar-section">
+        <div class="avatar-circle">
+            <span>🧑‍🦱</span>
+        </div>
+    </div>
+
+    <!-- الهاشتاك الرئيسي -->
+    <div class="hash-header">
+        <div class="hash-tag">
+            <span>👑</span> باتشينو (أبو علي) <span>👑</span>
+        </div>
+    </div>
+
+    <h1>📥 ساحب الفيديو</h1>
+    <div class="sub">تيك توك • انستغرام • بدون علامة مائية</div>
+
+    <div class="platform-select">
+        <button class="platform-btn active" data-platform="tiktok">🎵 تيك توك</button>
+        <button class="platform-btn" data-platform="instagram">📸 انستغرام</button>
+    </div>
+
+    <input type="text" id="videoUrl" class="url-input" placeholder="الصق رابط الفيديو هنا ...">
+    
+    <button class="download-btn" id="downloadBtn">✨ تحميل بدون علامة مائية</button>
+
+    <!-- روابط التواصل -->
+    <div class="social-links">
+        <a href="https://t.me/b3acc" target="_blank" class="social-icon telegram">
+            <span>📱</span> تليجرام: b3acc
+        </a>
+        <a href="https://instagram.com/b3.ac" target="_blank" class="social-icon instagram">
+            <span>📷</span> انستغرام: b3.ac
+        </a>
+    </div>
+
+    <div class="loader" id="loader"></div>
+    <div class="error-msg" id="errorMsg"></div>
+    
+    <div class="result-box" id="resultBox">
+        <video controls class="video-preview" id="videoPreview"></video>
+        <a href="#" id="downloadLink" class="action-link" download>📥 حفظ الفيديو (بدون علامة)</a>
+    </div>
+
+    <!-- تذييل بهاشتاك -->
+    <div class="hash-footer">
+        <span class="hash">#باتشينو_ابو_علي</span> 🖤 | تحميل بدون حقوق
+    </div>
+    
+    <div class="note">✧ أداة باتشينو (أبو علي) - الصق الرابط واستمتع بالتحميل بدون علامة مائية ✧</div>
+    <div class="watermark">© جميع الحقوق محفوظة | باتشينو (أبو علي)</div>
+</div>
+
+<script>
+    // تحديد المنصة
+    let currentPlatform = 'tiktok';
+    
+    const tiktokBtn = document.querySelector('[data-platform="tiktok"]');
+    const instaBtn = document.querySelector('[data-platform="instagram"]');
+    const urlInput = document.getElementById('videoUrl');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const loader = document.getElementById('loader');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultBox = document.getElementById('resultBox');
+    const videoPreview = document.getElementById('videoPreview');
+    const downloadLink = document.getElementById('downloadLink');
+
+    // تبديل المنصة
+    tiktokBtn.addEventListener('click', () => {
+        tiktokBtn.classList.add('active');
+        instaBtn.classList.remove('active');
+        currentPlatform = 'tiktok';
+        hideResult();
+    });
+
+    instaBtn.addEventListener('click', () => {
+        instaBtn.classList.add('active');
+        tiktokBtn.classList.remove('active');
+        currentPlatform = 'instagram';
+        hideResult();
+    });
+
+    function hideResult() {
+        resultBox.style.display = 'none';
+        errorMsg.style.display = 'none';
+    }
+
+    function showError(text) {
+        errorMsg.innerText = text;
+        errorMsg.style.display = 'block';
+        resultBox.style.display = 'none';
+    }
+
+    // وظيفة التحميل من تيك توك
+    async function fetchTikTok(url) {
+        try {
+            const apiEndpoint = `https://tikwm.com/api/?url=${encodeURIComponent(url)}`;
+            const response = await fetch(apiEndpoint);
+            const data = await response.json();
+            
+            if (data && data.data && data.data.play) {
+                return { success: true, videoUrl: data.data.play };
+            } else {
+                return { success: false, error: 'تعذر العثور على الفيديو، تأكد من الرابط' };
+            }
+        } catch (e) {
+            console.error(e);
+            return { success: false, error: 'حدث خطأ في الاتصال بخدمة تيك توك' };
+        }
+    }
+
+    // وظيفة التحميل من انستغرام
+    async function fetchInstagram(url) {
+        try {
+            const apiEndpoint = `https://api.downloadinstagram.app/api/convert?url=${encodeURIComponent(url)}`;
+            const response = await fetch(apiEndpoint);
+            const data = await response.json();
+            
+            if (data && data.result && data.result.video_url) {
+                return { success: true, videoUrl: data.result.video_url };
+            } else if (data && data.video_url) {
+                return { success: true, videoUrl: data.video_url };
+            } else {
+                return { success: false, error: 'لم نجد الفيديو، تأكد من الرابط' };
+            }
+        } catch (e) {
+            console.error(e);
+            return { success: false, error: 'فشل الاتصال بخدمة انستغرام' };
+        }
+    }
+
+    // المعالج الرئيسي
+    downloadBtn.addEventListener('click', async () => {
+        const url = urlInput.value.trim();
+        
+        if (!url) {
+            showError('الرجاء لصق رابط الفيديو أولاً');
+            return;
+        }
+        
+        if (!url.startsWith('http')) {
+            showError('الرابط يجب أن يبدأ بـ http:// أو https://');
+            return;
+        }
+        
+        if (currentPlatform === 'tiktok' && !url.includes('tiktok.com')) {
+            showError('هذا الرابط ليس من تيك توك، اختر المنصة الصحيحة');
+            return;
+        }
+        
+        if (currentPlatform === 'instagram' && !url.includes('instagram.com')) {
+            showError('هذا الرابط ليس من انستغرام، اختر المنصة الصحيحة');
+            return;
+        }
+        
+        loader.style.display = 'block';
+        resultBox.style.display = 'none';
+        errorMsg.style.display = 'none';
+        downloadBtn.disabled = true;
+        downloadBtn.style.opacity = '0.6';
+        
+        let result;
+        if (currentPlatform === 'tiktok') {
+            result = await fetchTikTok(url);
+        } else {
+            result = await fetchInstagram(url);
+        }
+        
+        loader.style.display = 'none';
+        downloadBtn.disabled = false;
+        downloadBtn.style.opacity = '1';
+        
+        if (result.success && result.videoUrl) {
+            videoPreview.src = result.videoUrl;
+            downloadLink.href = result.videoUrl;
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            showError(result.error || 'فشل التحميل، حاول مرة أخرى');
+        }
+    });
+    
+    urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            downloadBtn.click();
+        }
+    });
+</script>
+</body>
+</html>
